@@ -3,6 +3,7 @@ For managing a tree data structure representing equations.
 
 """
 import random
+from copy import deepcopy
 
 from src.math_functions import Add, Subtract, Multiply, Divide, IndependentVariable
 
@@ -23,9 +24,11 @@ class EquationTree:
     def __init__(self):
         self.val = None
         self.op = None
+        # TODO: Add handling for this attribute.
         self.descendents_cnt = 0
         self.children = []
         self.is_terminal = False
+        # TODO: Add parent tracking for random selection to work.
 
     def __str__(self):
         """
@@ -39,6 +42,21 @@ class EquationTree:
         if isinstance(self.val, IndependentVariable):
             return 'Independent variable: {0}'.format(self.val.symbol)
         return 'Value: {0}'.format(self.val)
+
+    def __deepcopy__(self, memodict=None):
+        """
+        Recursively deepcopy the subtree.
+
+        Returns: Deep copied subtree.
+
+        """
+        new_node = EquationTree()
+        new_node.val = self.val
+        new_node.op = self.op
+        new_node.descendents_cnt = self.descendents_cnt
+        new_node.is_terminal = self.is_terminal
+        new_node.children = [deepcopy(child) for child in self.children]
+        return new_node
 
     def init_terminal(self, val):
         """
@@ -70,20 +88,27 @@ class EquationTree:
             functions (set): Set of possible functions.
             both (set): Union of the above sets.
 
+        Returns: The number of descendents of the subtree, including self.
+
         """
         if self.is_terminal:
-            return
+            return 1
         # Generate random children.
+        desc_cnt = 0
         for i in range(self.op.PARAM_CNT):
             new_child = EquationTree()
             # Make a random selection.
-            rand_select = random.sample(both, 1)
+            rand_select = random.sample(both, 1)[0]
             if rand_select in terminals:
                 new_child.init_terminal(rand_select)
             else:
                 new_child.init_internal(rand_select)
             self.children.append(new_child)
-            # Grow the ch
+            # Grow the new child.
+            desc_cnt += new_child.grow(terminals, functions, both)
+        self.descendents_cnt = desc_cnt
+        # Return size of subtree.
+        return desc_cnt + 1
 
     def random_select(self):
         """
@@ -119,7 +144,7 @@ class EquationTree:
 
         """
         if isinstance(self.val, IndependentVariable):
-            return self.val.val
+            return self.val.cur_val
         if self.is_terminal:
             return self.val
         # Evaluate.

@@ -5,6 +5,8 @@ Collection of math functions for evaluation of expressions.
 
 import math
 
+# TODO: Consider division by 0.
+
 
 class IndependentVariable:
     """
@@ -12,13 +14,25 @@ class IndependentVariable:
 
     Attributes:
         symbol (str): The symbol for the variable.
-        val (int or float): The current value of the variable.
+        vals (tuple of int or float): The possible values of this independent variable.
+        cur_val (int or float): The current value of the variable.
 
     """
 
-    def __init__(self, symbol):
+    def __init__(self, symbol, vals):
         self.symbol = symbol
-        self.val = None
+        self.vals = vals
+        self.cur_val = vals[0]
+
+    def set_current_val(self, ind):
+        """
+        Update current value to the value at the given index.
+
+        Args:
+            ind: The index to use.
+
+        """
+        self.cur_val = self.vals[ind]
 
 
 class Add:
