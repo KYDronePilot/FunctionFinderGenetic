@@ -71,10 +71,19 @@ class EquationTree:
             both (set): Union of the above sets.
 
         """
-        # if
+        if self.is_terminal:
+            return
         # Generate random children.
-        children = []
-        # for i in range(self.op)
+        for i in range(self.op.PARAM_CNT):
+            new_child = EquationTree()
+            # Make a random selection.
+            rand_select = random.sample(both, 1)
+            if rand_select in terminals:
+                new_child.init_terminal(rand_select)
+            else:
+                new_child.init_internal(rand_select)
+            self.children.append(new_child)
+            # Grow the ch
 
     def random_select(self):
         """
