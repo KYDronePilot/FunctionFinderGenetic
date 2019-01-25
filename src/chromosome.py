@@ -98,6 +98,7 @@ class Chromosome:
         self_node = self.equation.random_select()
         other_node = other.equation.random_select()
         # TODO: Complete.
+        # If either is
 
 
 

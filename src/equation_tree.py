@@ -18,6 +18,7 @@ class EquationTree:
         descendents_cnt (int): The number of descendents of this node.
         children (list of EquationTree): The children of this node.
         is_terminal (bool): Whether the node is terminal or not.
+        parent (EquationTree): The parent of this node.
 
     """
 
@@ -29,6 +30,7 @@ class EquationTree:
         self.children = []
         self.is_terminal = False
         # TODO: Add parent tracking for random selection to work.
+        self.parent = None
 
     def __str__(self):
         """
@@ -97,6 +99,7 @@ class EquationTree:
         desc_cnt = 0
         for i in range(self.op.PARAM_CNT):
             new_child = EquationTree()
+            new_child.parent = self
             # Make a random selection.
             rand_select = random.sample(both, 1)[0]
             if rand_select in terminals:
