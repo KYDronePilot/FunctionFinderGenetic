@@ -19,18 +19,27 @@ class EquationTree:
         children (list of EquationTree): The children of this node.
         is_terminal (bool): Whether the node is terminal or not.
         parent (EquationTree): The parent of this node.
+        parent_i (int): The index of this child in the parent's children list.
+
+    Notes:
+        TERMINAL_SET, FUNCTION_SET, and
 
     """
+    # Possible terminal items and probability of being selected for a node.
+    TERMINAL_SET = frozenset()
+    TERMINAL_PROB = 0
+    # Possible functions and probability of being selected for a node.
+    FUNCTION_SET = frozenset()
+    FUNCTION_PROB = 0
 
     def __init__(self):
         self.val = None
         self.op = None
-        # TODO: Add handling for this attribute.
         self.descendents_cnt = 0
         self.children = []
         self.is_terminal = False
-        # TODO: Add parent tracking for random selection to work.
         self.parent = None
+        self.parent_i = None
 
     def __str__(self):
         """
@@ -57,6 +66,8 @@ class EquationTree:
         new_node.op = self.op
         new_node.descendents_cnt = self.descendents_cnt
         new_node.is_terminal = self.is_terminal
+        new_node.parent = self.parent
+        new_node.parent_i = self.parent_i
         new_node.children = [deepcopy(child) for child in self.children]
         return new_node
 
@@ -80,44 +91,57 @@ class EquationTree:
 
         """
         self.op = op
+        self.is_terminal = False
 
-    def grow(self, terminals, functions, both):
+    @staticmethod
+    def pick_terminal():
+        """
+        Randomly choose whether or not a terminal symbol should be used with given probability.
+
+        Returns:
+            bool: True if a terminal symbol should be used or False if an internal symbol should be used.
+
+        """
+        # Get random value out of sum of probabilities.
+        total = EquationTree.FUNCTION_PROB + EquationTree.TERMINAL_PROB
+        rand_val = random.randint(1, total)
+        # If value falls between 1 and function probability, pick function symbol.
+        if rand_val <= EquationTree.FUNCTION_PROB:
+            return False
+        # Else, pick terminal symbol.
+        return True
+
+    def grow(self):
         """
         Randomly grow a subtree.
 
-        Args:
-            terminals (set): Set of possible terminal values.
-            functions (set): Set of possible functions.
-            both (set): Union of the above sets.
-
-        Returns: The number of descendents of the subtree, including self.
+        Returns:
+            int: The number of descendents of the subtree, including self.
 
         """
-        if self.is_terminal:
+        self.descendents_cnt = 0
+        # Pick either a terminal or function symbol.
+        if self.pick_terminal():
+            rand_select = random.sample(EquationTree.TERMINAL_SET, 1)[0]
+            self.init_terminal(rand_select)
             return 1
-        # Generate random children.
-        desc_cnt = 0
+        rand_select = random.sample(EquationTree.FUNCTION_SET, 1)[0]
+        self.init_internal(rand_select)
+        # Generate children.
         for i in range(self.op.PARAM_CNT):
             new_child = EquationTree()
             new_child.parent = self
-            # Make a random selection.
-            rand_select = random.sample(both, 1)[0]
-            if rand_select in terminals:
-                new_child.init_terminal(rand_select)
-            else:
-                new_child.init_internal(rand_select)
+            new_child.parent_i = i
             self.children.append(new_child)
-            # Grow the new child.
-            desc_cnt += new_child.grow(terminals, functions, both)
-        self.descendents_cnt = desc_cnt
-        # Return size of subtree.
-        return desc_cnt + 1
+            self.descendents_cnt += new_child.grow()
+        return self.descendents_cnt + 1
 
     def random_select(self):
         """
         Randomly select a node from descendents.
 
-        Returns: Randomly selected node.
+        Returns:
+            EquationTree: Randomly selected node.
 
         """
         # Number of descendents for each child (including the child).

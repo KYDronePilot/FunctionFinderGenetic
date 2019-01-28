@@ -1,0 +1,72 @@
+{
+  "population_size": 1000,
+  "generations": 100,
+  "function_prob": 8,
+  "terminal_prob": 12,
+  "value_set": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "function_set": [
+    "Add",
+    "Subtract",
+    "Multiply",
+    "Divide"
+  ],
+  "independent_variables": [
+    "x"
+  ],
+  "independent_values": [
+    {
+      "x": 0.0
+    },
+    {
+      "x": 0.1
+    },
+    {
+      "x": 0.2
+    },
+    {
+      "x": 0.3
+    },
+    {
+      "x": 0.4
+    },
+    {
+      "x": 0.5
+    },
+    {
+      "x": 0.6
+    },
+    {
+      "x": 0.7
+    },
+    {
+      "x": 0.8
+    },
+    {
+      "x": 0.9
+    }
+  ],
+  "dependent_values": [
+    0.0,
+    0.005,
+    0.020,
+    0.045,
+    0.080,
+    0.125,
+    0.180,
+    0.245,
+    0.320,
+    0.405
+  ]
+}
