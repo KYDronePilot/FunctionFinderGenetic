@@ -71,7 +71,7 @@ class Nucleus:
         """
         self.calculate_error()
         for i in range(generations):
-            self.alt_reproduce()
+            self.reproduce()
             # Find the best individual.
             self.calculate_error()
             best = min(self.population, key=lambda x: x.error)

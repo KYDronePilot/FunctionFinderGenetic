@@ -20,6 +20,7 @@ class EquationTree:
         is_terminal (bool): Whether the node is terminal or not.
         parent (EquationTree): The parent of this node.
         parent_i (int): The index of this child in the parent's children list.
+        depth (int): The depth of this node.
 
     Notes:
         TERMINAL_SET, FUNCTION_SET, and
@@ -31,6 +32,8 @@ class EquationTree:
     # Possible functions and probability of being selected for a node.
     FUNCTION_SET = frozenset()
     FUNCTION_PROB = 0
+    # Max Tree depth.
+    MAX_DEPTH = 0
 
     def __init__(self):
         self.val = None
@@ -40,6 +43,7 @@ class EquationTree:
         self.is_terminal = False
         self.parent = None
         self.parent_i = None
+        self.depth = 0
 
     def __str__(self):
         """
@@ -68,6 +72,7 @@ class EquationTree:
         new_node.is_terminal = self.is_terminal
         new_node.parent = self.parent
         new_node.parent_i = self.parent_i
+        new_node.depth = self.depth
         new_node.children = [deepcopy(child) for child in self.children]
         return new_node
 
@@ -120,8 +125,11 @@ class EquationTree:
 
         """
         self.descendents_cnt = 0
-        # Pick either a terminal or function symbol.
-        if self.pick_terminal():
+        # Set the depth of the node.
+        if self.parent is not None:
+            self.depth = self.parent.depth + 1
+        # Pick either a terminal or function symbol (must choose terminal if max depth exceeded).
+        if self.pick_terminal() or self.depth >= EquationTree.MAX_DEPTH:
             rand_select = random.sample(EquationTree.TERMINAL_SET, 1)[0]
             self.init_terminal(rand_select)
             return 1

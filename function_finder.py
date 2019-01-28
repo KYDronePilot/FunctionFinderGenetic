@@ -34,6 +34,7 @@ class Main:
         dep_vals (list): Dependent values to consider (matches with each independent variable value)
         terminal_symbols (frozenset): The set of possible terminal symbols (values and independent variables).
         functions (frozenset): The set of possible functions that can be selected from.
+        max_depth (int): Max depth of the tree.
         nucleus (Nucleus): The nucleus which manages all the chromosomes.
 
     """
@@ -48,6 +49,7 @@ class Main:
         self.dep_vals = []
         self.terminal_symbols = frozenset()
         self.functions = frozenset()
+        self.max_depth = 0
         self.nucleus = None
 
     def load_attributes(self):
@@ -62,6 +64,7 @@ class Main:
         self.function_prob = raw['function_prob']
         self.terminal_prob = raw['terminal_prob']
         self.values = raw['value_set']
+        self.max_depth = raw['max_depth']
         # Create independent variable object for each.
         for var in raw['independent_variables']:
             # Get the values for that symbol.
@@ -75,13 +78,14 @@ class Main:
 
     def configure_equation_tree(self):
         """
-        Configure the terminal and function sets of the Equation Tree class.
+        Configure constants in the equation tree class.
 
         """
         EquationTree.FUNCTION_SET = self.functions
         EquationTree.FUNCTION_PROB = self.function_prob
         EquationTree.TERMINAL_SET = self.terminal_symbols
         EquationTree.TERMINAL_PROB = self.terminal_prob
+        EquationTree.MAX_DEPTH = self.max_depth
 
     def init_nucleus(self):
         """

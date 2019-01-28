@@ -1,8 +1,9 @@
 {
-  "population_size": 1000,
+  "population_size": 15000,
   "generations": 100,
   "function_prob": 8,
   "terminal_prob": 12,
+  "max_depth": 50,
   "value_set": [
     -5,
     -4,
