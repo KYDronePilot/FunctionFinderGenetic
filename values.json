@@ -1,9 +1,10 @@
 {
-  "population_size": 15000,
+  "population_size": 10000,
   "generations": 100,
-  "function_prob": 8,
+  "function_prob": 4,
   "terminal_prob": 12,
   "max_depth": 50,
+  "tournament_size": 4,
   "value_set": [
     -5,
     -4,

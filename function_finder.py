@@ -35,6 +35,7 @@ class Main:
         terminal_symbols (frozenset): The set of possible terminal symbols (values and independent variables).
         functions (frozenset): The set of possible functions that can be selected from.
         max_depth (int): Max depth of the tree.
+        tournament_size (int): The tournament size to use when performing selection.
         nucleus (Nucleus): The nucleus which manages all the chromosomes.
 
     """
@@ -50,6 +51,7 @@ class Main:
         self.terminal_symbols = frozenset()
         self.functions = frozenset()
         self.max_depth = 0
+        self.tournament_size = 0
         self.nucleus = None
 
     def load_attributes(self):
@@ -65,6 +67,7 @@ class Main:
         self.terminal_prob = raw['terminal_prob']
         self.values = raw['value_set']
         self.max_depth = raw['max_depth']
+        self.tournament_size = raw['tournament_size']
         # Create independent variable object for each.
         for var in raw['independent_variables']:
             # Get the values for that symbol.
@@ -96,7 +99,8 @@ class Main:
         self.nucleus = Nucleus(
             self.population_size,
             self.ind_vars,
-            self.dep_vals
+            self.dep_vals,
+            self.tournament_size
         )
         self.nucleus.generate_population()
 

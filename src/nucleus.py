@@ -26,10 +26,11 @@ class Nucleus:
         ind_vars (list): The independent variables.
         dep_vars (list): Dependent variable values.
         samples (list): Sample of the best individual of each generation.
+        tournament_size (int): The tournament size to use when performing the selection process.
 
     """
 
-    def __init__(self, population_size, ind_vars, dep_vars):
+    def __init__(self, population_size, ind_vars, dep_vars, tournament_size):
         """
         Raises:
             ValueError: If population size not divisible by 4.
@@ -43,6 +44,7 @@ class Nucleus:
         self.ind_vars = ind_vars
         self.dep_vars = dep_vars
         self.samples = []
+        self.tournament_size = tournament_size
 
     def generate_population(self):
         """
@@ -127,35 +129,31 @@ class Nucleus:
             except ZeroDivisionError:
                 chromosome.error = float('inf')
 
-    def tournament(self):
+    def tournament(self, k):
         """
-        Randomly select 4 unique chromosomes from the population and return the winners and losers.
+        Perform the tournament selection process on the population.
+
+        Args:
+            k (int): The number of individuals to participate in the tournament (must be divisible by 2).
+
+        Raises:
+            ValueError: If selection size not divisible by 2.
 
         Returns:
-            list[Chromosome]: The two winners of the competition.
+            list[Chromosome]: The n/2 winners of the tournament.
 
         """
-        unique = set()
-        participants = []
-        # Pick 4 participants.
-        cnt = 0
-        while cnt < 4:
-            rand_choice = random.choice(self.population)
-            if rand_choice not in unique:
-                participants.append(rand_choice)
-                unique.add(rand_choice)
-                cnt += 1
-        # Hold the tournament.
+        if k % 2 != 0:
+            raise ValueError('Selection size not divisible by 2.')
+        # Get participants.
+        participants = random.sample(self.population, k)
+        # Get the winners.
         winners = []
-        for i in range(2):
-            p1 = random.choice(participants)
-            participants.remove(p1)
-            p2 = random.choice(participants)
-            participants.remove(p2)
-            if p1.error < p2.error:
-                winners.append(p1)
+        for i in range(k // 2):
+            if participants[i * 2].error < participants[i * 2 + 1].error:
+                winners.append(participants[i * 2])
             else:
-                winners.append(p2)
+                winners.append(participants[i * 2 + 1])
         return winners
 
     @staticmethod
@@ -209,8 +207,8 @@ class Nucleus:
         self.calculate_error()
         new_population = []
         for i in range(self.population_size // 4):
-            # Perform the tournament process to select 2 winners.
-            winners = self.tournament()
+            # Perform the tournament selection process.
+            winners = self.tournament(self.tournament_size)
             # Deepcopy the winners, creating 2 children-to-be.
             child_1 = deepcopy(winners[0])
             child_2 = deepcopy(winners[1])
