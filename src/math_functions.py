@@ -3,10 +3,6 @@ Collection of math functions for evaluation of expressions.
 
 """
 
-import math
-
-# TODO: Consider division by 0.
-
 
 class IndependentVariable:
     """
@@ -59,7 +55,7 @@ class Add:
         return args[0] + args[1]
 
     @staticmethod
-    def render(args):
+    def render_latex(args):
         """
         Get Latex code for addition.
 
@@ -70,6 +66,22 @@ class Add:
 
         """
         return ' \\left( {0} + {1} \\right) '.format(
+            args[0],
+            args[1]
+        )
+
+    @staticmethod
+    def render(args):
+        """
+        Render subtree for addition using in-fix notation.
+
+        Args:
+            args (list): The values
+
+        Returns: Result
+
+        """
+        return '({0} + {1})'.format(
             args[0],
             args[1]
         )
@@ -99,7 +111,7 @@ class Subtract:
         return args[0] - args[1]
 
     @staticmethod
-    def render(args):
+    def render_latex(args):
         """
         Get Latex code for subtraction.
 
@@ -110,6 +122,22 @@ class Subtract:
 
         """
         return ' \\left( {0} - {1} \\right) '.format(
+            args[0],
+            args[1]
+        )
+
+    @staticmethod
+    def render(args):
+        """
+        Render subtree for subtraction using in-fix notation.
+
+        Args:
+            args (list): The values
+
+        Returns: Result
+
+        """
+        return '({0} - {1})'.format(
             args[0],
             args[1]
         )
@@ -139,7 +167,7 @@ class Multiply:
         return args[0] * args[1]
 
     @staticmethod
-    def render(args):
+    def render_latex(args):
         """
         Get Latex code for multiplication.
 
@@ -160,6 +188,22 @@ class Multiply:
             )
         # Else, use times sign.
         return ' {0} \\times {1} '.format(
+            args[0],
+            args[1]
+        )
+
+    @staticmethod
+    def render(args):
+        """
+        Render subtree for multiplication in-fix notation.
+
+        Args:
+            args (list): The values
+
+        Returns: Result
+
+        """
+        return '({0} * {1})'.format(
             args[0],
             args[1]
         )
@@ -189,7 +233,7 @@ class Divide:
         return args[0] / args[1]
     
     @staticmethod
-    def render(args):
+    def render_latex(args):
         """
         Get Latex code for division.
 
@@ -204,67 +248,18 @@ class Divide:
             args[1]
         )
 
-# 
-# class Math:
-#     """
-#     Some math functions for evaluation.
-# 
-#     """
-# 
-#     @staticmethod
-#     def add(args):
-#         """
-#         Add two arguments.
-# 
-#         Args:
-#             args (list): List of numerical args.
-# 
-#         Returns: Result.
-# 
-#         """
-#         return args[0] + args[1]
-# 
-#     @staticmethod
-#     def subtract(args):
-#         """
-#         Subtract two arguments.
-# 
-#         Args:
-#             args (list): List of numerical args.
-# 
-#         Returns: Result.
-# 
-#         """
-#         return args[0] - args[1]
-# 
-#     @staticmethod
-#     def multiply(args):
-#         """
-#         Multiply two arguments.
-# 
-#         Args:
-#             args (list): List of numerical args.
-# 
-#         Returns: Result.
-# 
-#         """
-#         return args[0] * args[1]
-# 
-#     @staticmethod
-#     def divide(args):
-#         """
-#         Divide two arguments.
-# 
-#         Args:
-#             args (list): List of numerical args.
-# 
-#         Returns: Result.
-# 
-#         """
-#         return args[0] / args[1]
+    @staticmethod
+    def render(args):
+        """
+        Render subtree for division in-fix notation.
 
+        Args:
+            args (list): The values
 
+        Returns: Result
 
-
-
-
+        """
+        return '({0} / {1})'.format(
+            args[0],
+            args[1]
+        )

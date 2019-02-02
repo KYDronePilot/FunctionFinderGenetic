@@ -198,4 +198,19 @@ class EquationTree:
         if self.is_terminal:
             return self.val
         rendered = [child.render_latex() for child in self.children]
+        return self.op.render_latex(rendered)
+
+    def render(self):
+        """
+        Render the equation using in-fix notation.
+
+        Returns:
+            str: The equation in in-fix notation.
+
+        """
+        if isinstance(self.val, IndependentVariable):
+            return self.val.symbol
+        if self.is_terminal:
+            return self.val
+        rendered = [child.render() for child in self.children]
         return self.op.render(rendered)

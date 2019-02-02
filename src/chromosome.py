@@ -30,6 +30,9 @@ class Chromosome:
         self.dep_vars = dep_vars
         self.error = 0
 
+    def __str__(self):
+        return str(self.equation.render())
+
     def __deepcopy__(self, memodict=None):
         """
         Deepcopy a chromosome.

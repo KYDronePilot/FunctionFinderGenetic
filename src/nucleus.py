@@ -80,7 +80,7 @@ class Nucleus:
             # Add best error to samples.
             self.samples.append(best.error)
             # DEBUG
-            print(best.equation.render_latex())
+            print(best.equation.render())
             # If best is below threshold, exit.
             if best.error < 1.0e-5:
                 return True

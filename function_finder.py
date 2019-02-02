@@ -136,5 +136,5 @@ if __name__ == '__main__':
     # Print the best individual.
     main.nucleus.sort()
     print('Error: ', main.nucleus.population[0].error)
-    print(main.nucleus.population[0].equation.render_latex())
+    print(main.nucleus.population[0].equation.render())
     main.nucleus.plot_learning()
