@@ -123,9 +123,6 @@ if __name__ == '__main__':
     main.configure_equation_tree()
     # Start the nucleus.
     main.init_nucleus()
-    # DEBUG.
-    for elem in main.nucleus.population:
-        print(elem.equation.render_latex())
     # Evolve.
     rc = main.evolve()
     # Print message declaring whether an ideal individual was found or not.
