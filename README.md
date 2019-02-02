@@ -7,8 +7,9 @@ Genetic program to approximate a function given a set of independent variables/v
 This project was an assignment for an algorithms course at Eastern Kentucky University, Spring 2019.
 
 The assignment specification was to create a genetic program that could approximate a mathematical function given a 
-list of independent variables and their values and dependent values. The particular values for this assignment are the 
-following:
+list of 2 dimensional points. This project goes beyond the assignment requirements by using independent variables and 
+their values and dependent values to work for multi-variable functions. The particular values for this assignment are
+the following:
 
 Independent variables:
 ```
@@ -47,7 +48,7 @@ The probability of whether a terminal symbol or function will be selected when g
 can grow to can be altered in the `values.json` file.
 
 ## Results
-Here are the top 3 equations obtained after running the program 10 times:
+Here are the top 3 functions obtained after running the program 10 times:
 
 |            Equation             | Square Error         |
 |:-------------------------------:|----------------------|
@@ -55,17 +56,30 @@ Here are the top 3 equations obtained after running the program 10 times:
 | `((-5 * x) / (-3 / (-1 / -5)))` | 0.024991666666666676 |
 | `((-5 * x) / (-3 / (-1 / -5)))` | 0.024991666666666676 |
 
-After leaving the program to run until an ideal equation was generated, this equation was generated after 11 runs:
+After leaving the program to run until an ideal function was generated, this function was generated after 11 runs:
 
 |              Equation              | Square Error          |
 |:----------------------------------:|-----------------------|
 | `(((x / 2) * x) + ((-5 * 1) + 5))` | 4.057242261750142e-33 |
 
+For this ideal function, the 10 values it obtains for the 10 `x-values` are as follows:
+
+| X-value | Output |
+|:-------:|:------:|
+|   0.0   |   0.0  |
+|   0.1   |  0.005 |
+|   0.2   |  0.020 |
+|   0.3   |  0.045 |
+|   0.4   |  0.080 |
+|   0.5   |  0.125 |
+|   0.6   |  0.180 |
+|   0.7   |  0.245 |
+|   0.8   |  0.320 |
+|   0.9   |  0.405 |
 
 ## Requirements
 #### Major
  * Python 3 (only tested on 3.6 and 3.7)
- TODO: not yet on 3.6!!!!
 #### Python Packages (`pip3 install ...`)
 Quick installation: `pip3 install -r requirements.pip`
  * matplotlib

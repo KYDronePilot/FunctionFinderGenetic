@@ -231,7 +231,7 @@ class Divide:
 
         """
         return args[0] / args[1]
-    
+
     @staticmethod
     def render_latex(args):
         """

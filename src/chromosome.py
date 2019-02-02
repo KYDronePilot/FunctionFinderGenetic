@@ -4,9 +4,8 @@ A chromosome container for managing a programmatic solution (equation).
 """
 import random
 from copy import deepcopy
-from src.equation_tree import EquationTree
-from src.math_functions import *
 
+from src.equation_tree import EquationTree
 
 # Terminal set.
 TERMINAL = set(range(-5, 6, 1))
@@ -119,14 +118,3 @@ class Chromosome:
             self.equation = other_node
         else:
             self_node.parent.children[self_node.parent_i] = other_node
-
-
-
-
-
-
-
-
-
-
-

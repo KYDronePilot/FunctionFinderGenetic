@@ -4,10 +4,9 @@ Main script for running and finding functions.
 """
 import json
 
-from src.nucleus import Nucleus
 from src.equation_tree import EquationTree
-from src.chromosome import Chromosome
 from src.math_functions import *
+from src.nucleus import Nucleus
 
 # Configuration file.
 VALUES_FILE = 'values.json'

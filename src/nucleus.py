@@ -3,14 +3,14 @@ Module for managing the population of chromosomes.
 
 """
 
-import random
-import matplotlib.pyplot as plt
 import os.path
+import random
 from copy import deepcopy
 from datetime import datetime
 
+import matplotlib.pyplot as plt
+
 from src.chromosome import Chromosome
-from src.equation_tree import EquationTree
 
 # Directory to save plots.
 PLOT_DIR = 'plots'
@@ -219,18 +219,3 @@ class Nucleus:
             new_population += winners + [child_1, child_2]
         # Update the population.
         self.population = new_population
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
