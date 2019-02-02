@@ -79,8 +79,6 @@ class Nucleus:
             best = min(self.population, key=lambda x: x.error)
             # Add best error to samples.
             self.samples.append(best.error)
-            # DEBUG
-            print(best.equation.render())
             # If best is below threshold, exit.
             if best.error < 1.0e-5:
                 return True
